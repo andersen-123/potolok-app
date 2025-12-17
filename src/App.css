@@ -38,21 +38,3 @@
     padding: 0.2rem;
   }
 }
-
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  
-  .total-summary {
-    page-break-inside: avoid;
-  }
-  
-  .table {
-    border-collapse: collapse;
-  }
-  
-  .table th, .table td {
-    border: 1px solid #000 !important;
-  }
-}
