@@ -1,22 +1,56 @@
 {
+  "id": "/potolokforlife",
   "name": "PotolokForLife",
   "short_name": "PotolokCalc",
   "description": "Калькулятор натяжных потолков",
   "start_url": ".",
+  "scope": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#3498db",
+  "categories": ["business", "productivity"],
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Главный экран калькулятора"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Новый расчёт",
+      "short_name": "Расчёт",
+      "description": "Создать новый расчёт потолков",
+      "url": "/new",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "История расчётов",
+      "short_name": "История",
+      "description": "Посмотреть историю расчётов",
+      "url": "/history",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "handle_links": "preferred",
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
 }
