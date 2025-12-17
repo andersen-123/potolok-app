@@ -3,22 +3,21 @@
   "name": "PotolokForLife",
   "short_name": "PotolokCalc",
   "description": "Калькулятор натяжных потолков",
-  "start_url": "/potolok-app/",
-  "scope": "/potolok-app/",
+  "start_url": ".",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#3498db",
-  "orientation": "any",
   "icons": [
     {
       "src": "icon-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
       "src": "icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
