@@ -20,38 +20,25 @@
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
-    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "homepage": "https://andersen-123.github.io/potolok-app",
   "devDependencies": {
     "gh-pages": "^5.0.0"
-  }
-}
-{
-  "pwa": {
-    "id": "potolokforlife",
-    "name": "PotolokForLife",
-    "short_name": "PotolokCalc",
-    "description": "Калькулятор натяжных потолков",
-    "start_url": ".",
-    "display": "standalone",
-    "theme_color": "#3498db",
-    "background_color": "#ffffff",
-    "icons": [
-      {
-        "src": "public/icon-192.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "public/icon-512.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ]
   }
 }
