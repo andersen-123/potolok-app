@@ -5,11 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#3498db" />
     <meta name="description" content="Калькулятор натяжных потолков" />
+    
+    <!-- PWA манифест -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Иконки для разных платформ -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon-192.png" />
+    
     <title>PotolokForLife - Калькулятор натяжных потолков</title>
 </head>
 <body>
     <noscript>Для работы приложения требуется JavaScript.</noscript>
     <div id="root"></div>
+    
+    <!-- Регистрация Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('service-worker.js')
+            .then(function(registration) {
+              console.log('ServiceWorker зарегистрирован: ', registration.scope);
+            })
+            .catch(function(error) {
+              console.log('Ошибка регистрации ServiceWorker: ', error);
+            });
+        });
+      }
+    </script>
 </body>
 </html>
