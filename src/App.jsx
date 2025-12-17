@@ -18,7 +18,6 @@ function App() {
   });
   const [editingMode, setEditingMode] = useState(false);
   const [editingRow, setEditingRow] = useState(null);
-  const [activeTemplate, setActiveTemplate] = useState('basic');
 
   // Загрузка файла Excel
   const handleFileUpload = async (event) => {
@@ -41,12 +40,11 @@ function App() {
       const saveData = {
         tableData,
         objectInfo,
-        activeTemplate,
         lastModified: new Date().toISOString()
       };
       localStorage.setItem('potolokAppData', JSON.stringify(saveData));
     }
-  }, [tableData, objectInfo, activeTemplate]);
+  }, [tableData, objectInfo]);
 
   // Загрузка из localStorage
   useEffect(() => {
@@ -56,7 +54,6 @@ function App() {
         const parsedData = JSON.parse(savedData);
         setTableData(parsedData.tableData || []);
         setObjectInfo(parsedData.objectInfo || {});
-        setActiveTemplate(parsedData.activeTemplate || 'basic');
       } catch (e) {
         console.error('Ошибка загрузки сохранённых данных:', e);
       }
