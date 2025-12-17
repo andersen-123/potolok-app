@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PotolokForLife</title>
+    
+    <!-- PWA обязательные мета-теги -->
+    <meta name="theme-color" content="#3498db">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Иконки -->
+    <link rel="icon" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <!-- Стили -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- PWA Builder рекомендует эти библиотеки -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка -->
+        <header>
+            <div class="logo">
+                <h1>🏠 PotolokForLife</h1>
+                <p>Калькулятор потолков</p>
+            </div>
+        </header>
+
+        <!-- Основное содержимое -->
+        <main>
+            <div class="card">
+                <h2>📏 Основные параметры</h2>
+                
+                <div class="input-group">
+                    <label>Площадь (м²):</label>
+                    <input type="number" id="area" min="1" placeholder="0" value="10">
+                </div>
+                
+                <div class="input-group">
+                    <label>Система монтажа:</label>
+                    <select id="system">
+                        <option value="garpun">Гарпунная (+вставка)</option>
+                        <option value="garpun_plus10">Гарпунная (+10%)</option>
+                        <option value="shadow">Теневой потолок</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Материалы -->
+            <div class="card">
+                <h2>🏗️ Основные материалы</h2>
+                <div id="materialsList"></div>
+            </div>
+
+            <!-- Оборудование -->
+            <div class="card">
+                <h2>💡 Оборудование</h2>
+                <div id="equipmentList"></div>
+            </div>
+
+            <!-- Результат -->
+            <div class="card result-card" id="resultCard" style="display: none;">
+                <h2>💰 Результат</h2>
+                <div id="resultContent"></div>
+                <div class="buttons">
+                    <button class="btn" onclick="saveToPDF()">📄 PDF</button>
+                    <button class="btn" onclick="shareViaTelegram()">📱 Telegram</button>
+                    <button class="btn" onclick="shareViaWhatsApp()">💬 WhatsApp</button>
+                </div>
+            </div>
+
+            <!-- Кнопки действий -->
+            <div class="actions">
+                <button class="btn primary" onclick="calculate()">📊 Рассчитать</button>
+                <button class="btn" onclick="resetForm()">🔄 Сбросить</button>
+            </div>
+        </main>
+
+        <!-- История -->
+        <section class="history">
+            <h3>📋 История</h3>
+            <div id="historyList"></div>
+        </section>
+
+        <!-- Футер -->
+        <footer>
+            <p>© PotolokForLife • 8(977)5311099</p>
+        </footer>
+    </div>
+
+    <!-- Подключаем скрипты -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Service Worker регистрация -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(() => console.log('✅ SW зарегистрирован'))
+                    .catch(err => console.log('❌ Ошибка SW:', err));
+            });
+        }
+        
+        // Установка PWA
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallButton();
+        });
+        
+        function showInstallButton() {
+            if (deferredPrompt) {
+                const installBtn = document.createElement('button');
+                installBtn.innerHTML = '📱 Установить';
+                installBtn.className = 'install-btn';
+                installBtn.onclick = async () => {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    installBtn.remove();
+                };
+                document.querySelector('header').appendChild(installBtn);
+            }
+        }
+    </script>
+</body>
+</html>
