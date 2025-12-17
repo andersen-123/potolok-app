@@ -39,21 +39,6 @@
   }
 }
 
-/* PWA Install Prompt */
-.pwa-install-prompt {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: white;
-  border: 2px solid #3498db;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  z-index: 1000;
-  max-width: 300px;
-}
-
-/* Print Styles */
 @media print {
   .no-print {
     display: none !important;
@@ -70,14 +55,4 @@
   .table th, .table td {
     border: 1px solid #000 !important;
   }
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.card {
-  animation: fadeIn 0.3s ease-out;
 }
