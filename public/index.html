@@ -2,96 +2,64 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    
-    <!-- PWA идентификация -->
-    <meta name="application-name" content="PotolokForLife">
-    <meta name="apple-mobile-web-app-title" content="PotolokCalc">
-    
-    <!-- PWA темы -->
-    <meta name="theme-color" content="#3498db" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#2c3e50" media="(prefers-color-scheme: dark)">
-    
-    <!-- Apple PWA -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <!-- Microsoft PWA -->
-    <meta name="msapplication-TileColor" content="#3498db">
-    <meta name="msapplication-TileImage" content="/icon-144.png">
-    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#3498db" />
+    <meta name="description" content="Калькулятор натяжных потолков" />
     
     <!-- PWA манифест -->
-    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" crossorigin="use-credentials">
     
     <!-- Иконки -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png">
-    <link rel="apple-touch-icon" href="/icon-180.png">
-    <link rel="mask-icon" href="/icon.svg" color="#3498db">
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon-192.png" />
     
     <title>PotolokForLife - Калькулятор натяжных потолков</title>
 </head>
 <body>
     <noscript>
-        <div style="text-align: center; padding: 50px;">
-            <h1>Для работы приложения требуется JavaScript</h1>
+        <div style="padding: 20px; text-align: center;">
+            <h2>Для работы приложения требуется JavaScript</h2>
             <p>Пожалуйста, включите JavaScript в настройках браузера</p>
         </div>
     </noscript>
     <div id="root"></div>
     
-    <!-- PWA Service Worker -->
+    <!-- Регистрация Service Worker -->
     <script>
-        // Регистрация Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const swUrl = '/service-worker.js';
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          const swUrl = `${process.env.PUBLIC_URL || ''}/service-worker.js`;
+          
+          navigator.serviceWorker.register(swUrl)
+            .then(registration => {
+              console.log('✅ Service Worker зарегистрирован:', registration);
+              
+              // Проверка обновлений
+              registration.onupdatefound = () => {
+                const installingWorker = registration.installing;
+                if (installingWorker == null) return;
                 
-                navigator.serviceWorker.register(swUrl)
-                    .then(registration => {
-                        console.log('✅ Service Worker зарегистрирован:', registration);
-                        
-                        // Проверка обновлений
-                        registration.onupdatefound = () => {
-                            const installingWorker = registration.installing;
-                            if (installingWorker == null) return;
-                            
-                            installingWorker.onstatechange = () => {
-                                if (installingWorker.state === 'installed') {
-                                    if (navigator.serviceWorker.controller) {
-                                        console.log('🔄 Новый контент доступен. Перезагрузите страницу.');
-                                    } else {
-                                        console.log('✅ Контент закэширован для оффлайн работы.');
-                                    }
-                                }
-                            };
-                        };
-                    })
-                    .catch(error => {
-                        console.error('❌ Ошибка регистрации Service Worker:', error);
-                    });
-            });
-        }
-        
-        // Проверка манифеста
-        fetch('/manifest.json')
-            .then(response => {
-                if (!response.ok) throw new Error('HTTP error ' + response.status);
-                return response.json();
-            })
-            .then(manifest => {
-                console.log('✅ Manifest загружен:', manifest.name);
-                console.log('📌 PWA ID:', manifest.id);
-                
-                // Проверка установки PWA
-                if (window.matchMedia('(display-mode: standalone)').matches) {
-                    console.log('📱 Приложение запущено в standalone режиме');
-                }
+                installingWorker.onstatechange = () => {
+                  if (installingWorker.state === 'installed') {
+                    if (navigator.serviceWorker.controller) {
+                      console.log('🔄 Новый контент доступен. Перезагрузите страницу.');
+                    } else {
+                      console.log('✅ Контент закэширован для оффлайн работы.');
+                    }
+                  }
+                };
+              };
             })
             .catch(error => {
-                console.warn('⚠️ Manifest не загружен:', error.message);
+              console.error('❌ Ошибка регистрации Service Worker:', error);
             });
+        });
+      }
+      
+      // Проверка PWA возможностей
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        console.log('📱 Приложение запущено в standalone режиме');
+      }
     </script>
 </body>
 </html>
