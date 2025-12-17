@@ -49,23 +49,23 @@ function parseExcelData(data) {
       const cell = String(row[0]).trim();
       const value = String(row[1] || '').trim();
       
-      if (cell.includes('Обьект:') || cell.includes('Объект:')) {
+      if (cell.includes('Обьект:')) {
         result.objectInfo.objectType = value;
       } else if (cell.includes('Адрес:')) {
         result.objectInfo.address = value;
       } else if (cell.includes('Помещений:')) {
         result.objectInfo.roomCount = value;
-      } else if (cell === 'S:' || cell.includes('S:')) {
+      } else if (cell === 'S:') {
         result.objectInfo.area = parseFloat(value) || 0;
-      } else if (cell === 'P:' || cell.includes('P:')) {
+      } else if (cell === 'P:') {
         result.objectInfo.perimeter = parseFloat(value) || 0;
-      } else if (cell === 'h:' || cell.includes('h:')) {
+      } else if (cell === 'h:') {
         result.objectInfo.height = parseFloat(value) || 0;
       }
     }
   }
   
-  // Находим таблицу (ищем строку с заголовками)
+  // Находим таблицу
   let tableStart = -1;
   for (let i = 0; i < data.length; i++) {
     if (data[i] && data[i][0] === '№ п.п') {
@@ -75,16 +75,14 @@ function parseExcelData(data) {
   }
   
   if (tableStart !== -1) {
-    // Парсим данные таблицы
     for (let i = tableStart + 1; i < data.length; i++) {
       const row = data[i];
       if (!row || row.length < 6) continue;
       
-      // Пропускаем итоговые строки
       if (String(row[1]).includes('Итого')) continue;
       
       const rowData = {
-        A: i - tableStart, // Номер по порядку
+        A: i - tableStart,
         B: String(row[1] || '').trim(),
         C: String(row[2] || '').trim(),
         D: parseFloat(row[3]) || 0,
@@ -93,7 +91,6 @@ function parseExcelData(data) {
         G: String(row[6] || '').trim()
       };
       
-      // Если есть название и цена, добавляем
       if (rowData.B && rowData.E > 0) {
         result.tableData.push(rowData);
       }
@@ -101,38 +98,4 @@ function parseExcelData(data) {
   }
   
   return result;
-}
-
-// Функция для создания нового шаблона
-export function createEmptyTemplate() {
-  return {
-    objectInfo: {
-      objectType: 'Квартира',
-      address: '',
-      roomCount: '1',
-      area: 0,
-      perimeter: 0,
-      height: 0
-    },
-    tableData: [
-      {
-        A: 1,
-        B: 'Полотно MSD Premium белое матовое с установкой',
-        C: 'м²',
-        D: 0,
-        E: 610,
-        F: 0,
-        G: ''
-      },
-      {
-        A: 2,
-        B: 'Профиль стеновой/потолочный гарпунный с установкой',
-        C: 'м.п.',
-        D: 0,
-        E: 310,
-        F: 0,
-        G: ''
-      }
-    ]
-  };
 }
