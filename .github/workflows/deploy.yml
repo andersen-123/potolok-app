@@ -1,46 +1,28 @@
-name: Deploy React App to GitHub Pages
+name: Deploy React App
 
 on:
   push:
     branches: [main]
 
-permissions:
-  contents: write
-
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+    - uses: actions/checkout@v3
     
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-        cache: 'npm'
-    
+        
     - name: Install dependencies
-      run: |
-        npm install
-        # Если package-lock.json не существует, создаем его
-        if [ ! -f package-lock.json ]; then
-          npm install --package-lock-only
-        fi
-    
+      run: npm install
+      
     - name: Build
       run: npm run build
-    
-    - name: Create .nojekyll file
-      run: touch build/.nojekyll
-    
+      
     - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        branch: gh-pages
-        folder: build
-        clean: true
-        single-commit: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
