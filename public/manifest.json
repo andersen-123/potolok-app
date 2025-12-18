@@ -3,31 +3,24 @@
   "short_name": "PotolokCalc",
   "description": "Калькулятор натяжных потолков",
   "start_url": ".",
+  "scope": ".",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#3498db",
+  "categories": ["business", "productivity"],
   "icons": [
     {
-      "src": "logo192.png",
-      "sizes": "192x192",
+      "src": "icon-192.png",
       "type": "image/png",
+      "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "logo512.png",
+      "src": "icon-512.png",
+      "type": "image/png",
       "sizes": "512x512",
-      "type": "image/png",
       "purpose": "any maskable"
-    }
-  ],
-  "categories": ["business", "productivity"],
-  "screenshots": [
-    {
-      "src": "screenshot1.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
     }
   ]
 }
